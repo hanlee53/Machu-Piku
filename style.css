@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+}
+
+/*Title of the page "Match Piku"*/
+.top {
+    text-align: center;
+    padding-top: 3vw;
+    padding-bottom: 3vw;
+    margin: 0;
+}
+
+.top h1 {
+    margin: 0;
+}
+
+
+/*To center the world-cup container, we need a parent div which its display set to flex*/
+.parent {
+    display: flex;
+    justify-content: center; /*horizontally center the child div(here, the worldcup-container div)*/
+}
+
+/*Container that contains tournaments(worldcup), set its display to grid to place list elements(worldcup) in grid*/
+.worldcup-container {
+    display: grid;
+    width: 80vw; /*Set its width to less than 100.so there are spaces left and right(maybe for ads if possible)*/
+}
+
+/*Determine how ul, worldcups */
+.worldcups {
+    font-size: 0.7vw; 
+    height: 55vw;
+    list-style: none;
+    display: grid;
+    padding: 0;
+    margin: 0;
+    grid-template-columns: repeat(3, minmax(2vw, 1fr));
+    gap: 0.5vw;
+}
+
+.worldcup h1 {
+    margin: 0;
+}
+/*display originally set to none, if .show class is added according to pagination.js, display the worldcup*/
+.worldcup {
+    display: none;
+}
+
+.worldcup.show {
+    display: grid;
+}
+
+
+
+.thumbnail {
+    background-color: black;
+    height: 25vw;
+    width: 25vw;
+}
+
+.pagination {
+
+}
+
+.pagination ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.5vw;
+    list-style: none;
+}
+
+.page, .icon{
+    width: 2vw;
+    height: 2vw;
+    font-size: 1.3vw;
+    border-radius: 50%;
+    user-select: none; /*This prevent users from selecting list items(click and drag)*/
+    cursor: pointer;
+    /*These two center the text inside the border which appears white when mouse is hovering. Wihtout these css the text would stay on the left-bottom of the circle*/
+    text-align: center;
+    line-height: 2vw;
+}
+
+.page:hover, .icon:hover{
+    background-color:#9F8C76;
+    transition-duration: 1.25s;
+}
+
+.page.active {
+    background-color: burlywood;
+}
