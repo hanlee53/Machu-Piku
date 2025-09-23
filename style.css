@@ -91,3 +91,18 @@
 .page.active {
     background-color: burlywood;
 }
+
+.container {
+    display: flex;
+}
+
+.left, .left img {
+    height: 100vh;
+    width: 50vw;
+}
+
+.right, .right img {
+    height: 100vh;
+    width: 50vw;
+}
+
