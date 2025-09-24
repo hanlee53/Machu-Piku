@@ -97,12 +97,12 @@
 }
 
 .left, .left img {
-    height: 100vh;
+    height: 10vh;
     width: 50vw;
 }
 
 .right, .right img {
-    height: 100vh;
+    height: 10vh;
     width: 50vw;
 }
 

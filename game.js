@@ -1,11 +1,12 @@
 let sourceCsvFile;
 
-// Read the csv file and create a nested array [
-//                                              [name1, imgSrc1], 
-//                                              [name2, imgSrc2], 
-//                                              ...
-//                                             ]
-async function readCSV(sourceCsvFile) {
+/*  Read the csv file and create a nested array [
+                                                [name1, imgSrc1], 
+                                                [name2, imgSrc2], 
+                                                ...
+                                                ]
+*/
+async function readCSV(sourceCsvFile, tournamentFormat) {
     const response = await fetch(sourceCsvFile);
     const text = await response.text();
     
@@ -14,48 +15,94 @@ async function readCSV(sourceCsvFile) {
     const rows = text.split("\n");
 
     for (let i = 2; i < rows.length; ++i) {
-        let player_profile = rows[i];
-        let player_profile_list = player_profile.split(",");
-        let id = player_profile_list[0],
-            name = player_profile_list[1],
-            imgSrc = player_profile_list[2],
-            license = player_profile_list[3];
+        let player_profile = rows[i],
+            idx = player_profile.indexOf(","),
+            name = player_profile.slice(0, idx).trim(),
+            imgSrc = player_profile.slice(idx + 1).trim();
         
-        contender_list.push([name, imgSrc]);
+        if (imgSrc.startsWith('"') && imgSrc.endsWith('"')) {
+            imgSrc = imgSrc.slice(1, -1); // remove first and last char
+        }
+    
+        const player = {name, imgSrc};
+        player[tournamentFormat] = 1;
+
+        for (let i = tournamentFormat / 2; i >= 2; i /= 2) {
+            player[i] = 0;
+        }
+
+        contender_list.push(player);
     }
 
     return contender_list;
 }
 
-// Create random number from 0 to TournamentFormat - 1. Need to fix this. 
-function generateRandomNumber(tournamentFormat) {
+// Create random number from 0 to maxNumber
+function generateRandomNumber(maxNumber) {
     let min = 0;
-    let max = tournamentFormat;
+    let max = maxNumber;
 
     let randomNumber = Math.floor(Math.random() * max);
     
     return randomNumber;
 }
 
+
 async function shuffleTournamentList(srcToCsv, tournamentFormat) {
-    const contender_list = await readCSV(srcToCsv);
+    const contender_list = await readCSV(srcToCsv, tournamentFormat); 
     let players = [];
 
+    //Always put the top 5 players
+    for (let i = 0; i < 5; ++i) {
+        players.push(contender_list[i]);
+    }
+
+    // randomly select players upto tournament format (16,32,64)
     while (players.length < tournamentFormat) {
-        let randomNumber = generateRandomNumber(tournamentFormat);
+        let randomNumber = generateRandomNumber(contender_list.length);
         let player = contender_list[randomNumber];
 
         if (!players.includes(player)) {
             players.push(player);
-        }
+        } 
+    }   
+    return players;
+}
+
+async function createTournament(srcToCsv, tournamentFormat) {
+    const players = await shuffleTournamentList(srcToCsv, tournamentFormat);
+    const left = document.querySelector(".left"),
+        right = document.querySelector(".right"),
+          
+        left_img = document.getElementById("left_img"),
+        right_img = document.getElementById("right_img"),
+          
+        leftNumber = generateRandomNumber(tournamentFormat),
+        rightNumber = generateRandomNumber(tournamentFormat),
+          
+        left_player = players[leftNumber],
+        right_player = players[rightNumber],
+          
+        leftImgSrc = left_player.imgSrc,
+        rightImgSrc = right_player.imgSrc,
+
+        leftName = left_player.name,
+        rightName = right_player.name;
+
+
+
+    if (players.length == 1) {
+        console.log("Winner is {players[0].name}");
+        return;
     }
-    console.log(players);
+
     
+    left_img.src = leftImgSrc;
+    right_img.src = rightImgSrc;
+
+    console.log(players);
 }
 
 
-
-
-shuffleTournamentList("source/csv/ManUtd_Players.csv", 64);
-  
+createTournament("source/csv/ManUtd_Players.csv", 64);
 
