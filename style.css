@@ -15,7 +15,7 @@
 }
 
 
-/*To center the world-cup container, we need a parent div which its display set to flex*/
+
 .parent {
     display: flex;
     justify-content: center; /*horizontally center the child div(here, the worldcup-container div)*/
@@ -59,9 +59,6 @@
     width: 25vw;
 }
 
-.pagination {
-
-}
 
 .pagination ul {
     margin: 0;

@@ -6,6 +6,7 @@ let sourceCsvFile;
                                                 ...
                                                 ]
 */
+
 async function readCSV(sourceCsvFile, tournamentFormat) {
     const response = await fetch(sourceCsvFile);
     const text = await response.text();
@@ -27,7 +28,7 @@ async function readCSV(sourceCsvFile, tournamentFormat) {
         const player = {name, imgSrc};
         player[tournamentFormat] = 1;
 
-        for (let i = tournamentFormat / 2; i >= 2; i /= 2) {
+        for (let i = tournamentFormat / 2; i >= 1; i /= 2) {
             player[i] = 0;
         }
 
@@ -37,17 +38,7 @@ async function readCSV(sourceCsvFile, tournamentFormat) {
     return contender_list;
 }
 
-// Create random number from 0 to maxNumber
-function generateRandomNumber(maxNumber) {
-    let min = 0;
-    let max = maxNumber;
-
-    let randomNumber = Math.floor(Math.random() * max);
-    
-    return randomNumber;
-}
-
-
+// select contenders for the tournament
 async function shuffleTournamentList(srcToCsv, tournamentFormat) {
     const contender_list = await readCSV(srcToCsv, tournamentFormat); 
     let players = [];
@@ -59,7 +50,7 @@ async function shuffleTournamentList(srcToCsv, tournamentFormat) {
 
     // randomly select players upto tournament format (16,32,64)
     while (players.length < tournamentFormat) {
-        let randomNumber = generateRandomNumber(contender_list.length);
+        let randomNumber = Math.floor(Math.random() * tournamentFormat);
         let player = contender_list[randomNumber];
 
         if (!players.includes(player)) {
@@ -69,40 +60,37 @@ async function shuffleTournamentList(srcToCsv, tournamentFormat) {
     return players;
 }
 
-async function createTournament(srcToCsv, tournamentFormat) {
-    const players = await shuffleTournamentList(srcToCsv, tournamentFormat);
+async function tournament(arr, tournamentFormat) {
     const left = document.querySelector(".left"),
-        right = document.querySelector(".right"),
-          
-        left_img = document.getElementById("left_img"),
-        right_img = document.getElementById("right_img"),
-          
-        leftNumber = generateRandomNumber(tournamentFormat),
-        rightNumber = generateRandomNumber(tournamentFormat),
-          
-        left_player = players[leftNumber],
-        right_player = players[rightNumber],
-          
-        leftImgSrc = left_player.imgSrc,
-        rightImgSrc = right_player.imgSrc,
-
-        leftName = left_player.name,
-        rightName = right_player.name;
-
-
-
-    if (players.length == 1) {
-        console.log("Winner is {players[0].name}");
-        return;
+          right = document.querySelector(".right");
+        
+    let leftNumber = Math.floor(Math.random() * tournamentFormat),
+        rightNumber = Math.floor(Math.random() * tournamentFormat),
+        leftPlayer = arr[leftNumber],
+        rightPlayer = arr[rightNumber];
+    
+    while (leftPlayer.tournamentFormat == 0) {
+        leftNumber = Math.floor(Math.random() * tournamentFormat);
+        leftPlayer = arr[leftNumber];
     }
 
-    
-    left_img.src = leftImgSrc;
-    right_img.src = rightImgSrc;
+    while (rightPlayer.tournamentFormat == 0) {
+        rightNumber = Math.floor(Math.random() * tournamentFormat);
+        rightPlayer = arr[rightNumber];
+    }
 
-    console.log(players);
+    left.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> ${leftPlayer.name}`;
+    right.innerHTML = `<img id=right_img" src="${arr[rightNumber].imgSrc}" alt="${arr[rightNumber].name}"> ${arr[rightNumber].name}`;
+
+
+    console.log(arr); // For test, can be deleted later. 
 }
 
 
-createTournament("source/csv/ManUtd_Players.csv", 64);
 
+async function main() {
+    const players = await shuffleTournamentList("source/csv/ManUtd_Players.csv", 64);
+    tournament(players, 64);
+}
+
+main();
