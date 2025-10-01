@@ -1,11 +1,9 @@
 let sourceCsvFile;
 
-/*  Read the csv file and create a nested array [
-                                                [name1, imgSrc1], 
-                                                [name2, imgSrc2], 
-                                                ...
-                                                ]
-*/
+// Back to index.html
+function returnHome() {
+    window.location.href = "index.html";
+}
 
 async function readCSV(sourceCsvFile, tournamentFormat) {
     const response = await fetch(sourceCsvFile);
@@ -15,6 +13,7 @@ async function readCSV(sourceCsvFile, tournamentFormat) {
     // Simple parsing into rows & columns
     const rows = text.split("\n");
 
+    // Push players into the list in such format -> {{name, imgSrc}, {name, imgSrc}, ...}
     for (let i = 2; i < rows.length; ++i) {
         let player_profile = rows[i],
             idx = player_profile.indexOf(","),
@@ -26,11 +25,6 @@ async function readCSV(sourceCsvFile, tournamentFormat) {
         }
     
         const player = {name, imgSrc};
-        player[tournamentFormat] = 1;
-
-        for (let i = tournamentFormat / 2; i >= 1; i /= 2) {
-            player[i] = 0;
-        }
         contender_list.push(player);
     }
     return contender_list;
@@ -48,7 +42,7 @@ async function shuffleTournamentList(srcToCsv, tournamentFormat) {
 
     // randomly select players upto tournament format (16,32,64)
     while (players.length < tournamentFormat) {
-        let randomNumber = Math.floor(Math.random() * tournamentFormat);
+        let randomNumber = Math.floor(Math.random() * contender_list.length);
         let player = contender_list[randomNumber];
 
         if (!players.includes(player)) {
@@ -58,6 +52,7 @@ async function shuffleTournamentList(srcToCsv, tournamentFormat) {
     return players;
 }
 
+// Display left and right players' image and name
 function renderLeftAndRight(leftPlayer, rightPlayer) {
     const left = document.querySelector(".left"),
           right = document.querySelector(".right");
@@ -67,55 +62,49 @@ function renderLeftAndRight(leftPlayer, rightPlayer) {
     right.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
 }
 
-
+// Run the tournament
 function tournament(players, number, tournamentFormat, winners) {
-    console.log(number);
-    console.log(tournamentFormat);
-
     const left = document.querySelector(".left"),
           right = document.querySelector(".right"),
           title = document.querySelector(".status-bar");
+        
 
-    console.log(winners);
-    if (number >= tournamentFormat / 2) {
-        return;
-    }
-
-    leftPlayer = players[number];
-    rightPlayer = players[tournamentFormat - 1 - number];
+    leftPlayer = players[number]; // Starts from the first player of the list
+    rightPlayer = players[tournamentFormat - 1 - number]; // Starts from the last player of the list
 
     title.innerHTML = `<p>Round ${tournamentFormat} &nbsp ${number}/${tournamentFormat / 2} </p>`;
     renderLeftAndRight(leftPlayer, rightPlayer);
 
+    // When left player is selected
     left.onclick = () => {
-        if (!winners.includes(leftPlayer)) {
-            winners.push(leftPlayer);
-        }
+        winners.push(leftPlayer); // Selected player in the winners list.
 
+        // if the round is over
         if (number + 1 >= tournamentFormat / 2) {
-        // round done → start next with winners
-            if (winners.length === 1) {
-                alert(`🏆 The winner is ${winners[0].name}!`);
+            if (winners.length === 1) { // display the winner if there is only one winner
+                alert(`The winner is ${winners[0].name}!`); 
+                returnHome();
             } else {
                 tournament(winners, 0, winners.length, []); // new round
             }
         } else {
-        tournament(players, number + 1, tournamentFormat, winners);
+        tournament(players, number + 1, tournamentFormat, winners); // continue until the next round
         }
     };
 
+    // When right player is selected
     right.onclick = () => {
-        winners.push(rightPlayer);
+        winners.push(rightPlayer); // Selected player in the winners list
         
         if (number + 1 >= tournamentFormat / 2) {
-            console.log("finished");
-            if (winners.length === 1) {
-                alert(`🏆 The winner is ${winners[0].name}!`);
+            if (winners.length === 1) { // display the winner if there is only one winner
+                alert(`The winner is ${winners[0].name}!`);
+                returnHome()
             } else {
                 tournament(winners, 0, winners.length, []); // new round
             }
         } else {
-        tournament(players, number + 1, tournamentFormat, winners);
+        tournament(players, number + 1, tournamentFormat, winners); // continue until the next round
         }
     };
 }
@@ -123,9 +112,20 @@ function tournament(players, number, tournamentFormat, winners) {
 
 async function main() {
     const winners = [];
-    const players = await shuffleTournamentList("source/csv/ManUtd_Players.csv", 64);
-    console.log(players);
-    let result = tournament(players, 0, 64, winners);
+    document.getElementById("tournamentFormat-form").addEventListener("submit", async function (event) {
+        // stop the page from reloading
+        event.preventDefault(); 
+    
+        // the tournamentFormat is what user has selected: 64,32,16.
+        const tournamentFormat = parseInt(document.getElementById("tournamentFormat").value, 10);
+        
+        // Run the tournament
+        const players = await shuffleTournamentList("source/csv/ManUtd_Players.csv", tournamentFormat);
+        tournament(players, 0, tournamentFormat, winners); 
+
+        // Hide the select menu after the userInput
+        document.getElementById("tournamentFormat-form").innerHTML = `<form id="tournamentFormat-form" style="display: hidden;">`;
+    });
 }
 
 main();
