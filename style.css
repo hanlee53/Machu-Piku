@@ -89,17 +89,36 @@
     background-color: burlywood;
 }
 
+.status-bar {
+    width: 80vw;
+    background-color: antiquewhite;
+}
+
+.status-bar p {
+    font-size: 2vw;
+    margin: 0;
+}
+
 .container {
     display: flex;
 }
 
-.left, .left img {
+.left img, .right img {
+    opacity: 0.8;
     height: 70vh;
     width: 40vw;
 }
 
-.right, .right img {
-    height: 70vh;
-    width: 40vw;
+.left , .right {
+    position: relative;
+    text-align: center;
+}
+
+.left h1, .right h1 {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2vw;
 }
 
