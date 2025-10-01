@@ -112,10 +112,10 @@ function tournament(players, number, tournamentFormat, winners) {
             if (winners.length === 1) {
                 alert(`🏆 The winner is ${winners[0].name}!`);
             } else {
-                c(winners, 0, winners.length, []); // new round
+                tournament(winners, 0, winners.length, []); // new round
             }
         } else {
-        c(players, number + 1, tournamentFormat, winners);
+        tournament(players, number + 1, tournamentFormat, winners);
         }
     };
 }
