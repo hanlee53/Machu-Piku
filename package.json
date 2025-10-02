@@ -4,7 +4,7 @@
   "description": "Testing jjinmak",
   "main": "game.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:api": "node api/server.js"
   },
   "repository": {
     "type": "git",
@@ -13,9 +13,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/hanlee53/Machu-Piku/issues"
   },
-  "homepage": "https://github.com/hanlee53/Machu-Piku#readme"
+  "homepage": "https://github.com/hanlee53/Machu-Piku#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nanoid": "^5.1.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
 }
