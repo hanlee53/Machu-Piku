@@ -14,8 +14,6 @@
     margin: 0;
 }
 
-
-
 .parent {
     display: flex;
     justify-content: center; /*horizontally center the child div(here, the worldcup-container div)*/
@@ -50,8 +48,6 @@
 .worldcup.show {
     display: grid;
 }
-
-
 
 .thumbnail {
     background-color: black;
@@ -89,9 +85,14 @@
     background-color: burlywood;
 }
 
+/*game.html*/
+.parent-game {
+    display: flex;
+    justify-content: center; /*horizontally center the child div(here, the worldcup-container div)*/
+}
 .status-bar {
     width: 80vw;
-    background-color: antiquewhite;
+    height: 4vh;
 }
 
 .status-bar p {

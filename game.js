@@ -2,7 +2,7 @@ let sourceCsvFile;
 
 // Back to index.html
 function returnHome() {
-    window.location.href = "index.html";
+    window.location.href = "result.html";
 }
 
 async function readCSV(sourceCsvFile, tournamentFormat) {
@@ -42,7 +42,7 @@ async function shuffleTournamentList(srcToCsv, tournamentFormat) {
 
     // randomly select players upto tournament format (16,32,64)
     while (players.length < tournamentFormat) {
-        let randomNumber = Math.floor(Math.random() * contender_list.length);
+        let randomNumber = Math.floor(Math.random() * (contender_list.length - 1));
         let player = contender_list[randomNumber];
 
         if (!players.includes(player)) {
@@ -57,9 +57,13 @@ function renderLeftAndRight(leftPlayer, rightPlayer) {
     const left = document.querySelector(".left"),
           right = document.querySelector(".right");
 
-
-    left.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> <h1>${leftPlayer.name}</h1>`;
-    right.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
+    if (Math.random() < 0.5) {
+        left.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> <h1>${leftPlayer.name}</h1>`;
+        right.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
+    } else {
+        right.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> <h1>${leftPlayer.name}</h1>`;
+        left.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
+    }
 }
 
 // Run the tournament
