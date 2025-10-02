@@ -57,13 +57,9 @@ function renderLeftAndRight(leftPlayer, rightPlayer) {
     const left = document.querySelector(".left"),
           right = document.querySelector(".right");
 
-    if (Math.random() < 0.5) {
-        left.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> <h1>${leftPlayer.name}</h1>`;
-        right.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
-    } else {
-        right.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> <h1>${leftPlayer.name}</h1>`;
-        left.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
-    }
+    left.innerHTML = `<img id="left_img" src="${leftPlayer.imgSrc}" alt="${leftPlayer.name}"> <h1>${leftPlayer.name}</h1>`;
+    right.innerHTML = `<img id=right_img" src="${rightPlayer.imgSrc}" alt="${rightPlayer.name}"> <h1>${rightPlayer.name}</h1>`;
+
 }
 
 // Run the tournament
@@ -71,10 +67,10 @@ function tournament(players, number, tournamentFormat, winners) {
     const left = document.querySelector(".left"),
           right = document.querySelector(".right"),
           title = document.querySelector(".status-bar");
-        
 
     leftPlayer = players[number]; // Starts from the first player of the list
     rightPlayer = players[tournamentFormat - 1 - number]; // Starts from the last player of the list
+
 
     title.innerHTML = `<p>Round ${tournamentFormat} &nbsp ${number}/${tournamentFormat / 2} </p>`;
     renderLeftAndRight(leftPlayer, rightPlayer);
@@ -124,8 +120,16 @@ async function main() {
         const tournamentFormat = parseInt(document.getElementById("tournamentFormat").value, 10);
         
         // Run the tournament
-        const players = await shuffleTournamentList("source/csv/ManUtd_Players.csv", tournamentFormat);
+        const left = document.querySelector(".left"),
+            right = document.querySelector(".right"),
+            nav = document.querySelector(".status-bar");
+        
+            const players = await shuffleTournamentList("source/csv/ManUtd_Players.csv", tournamentFormat);
         tournament(players, 0, tournamentFormat, winners); 
+        
+        left.classList.toggle("active");
+        right.classList.toggle("active");
+        nav.classList.toggle("active");
 
         // Hide the select menu after the userInput
         document.getElementById("tournamentFormat-form").innerHTML = `<form id="tournamentFormat-form" style="display: hidden;">`;

@@ -6,17 +6,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
     </head>
-    <body style="margin-top: 10vh;">
-        <form id="tournamentFormat-form">
-            <label for="format">Choose number of players you want to start with</label>
-            <select name="tournament" id="tournamentFormat" required>
-                <option value="" disabled selected hidden>Please Choose...</option>
-                <option value="64">64</option>
-                <option value="32">32</option>
-                <option value="16">16</option>
-            </select>
-            <input type="submit">
-        </form>
+    <body>
+        <div class="title"><a href="index.html">Machu Piku</a></div>
+        
+        <div class="form-container">
+            <form id="tournamentFormat-form">
+                <label for="format">Choose number of players you want to start with</label>
+                <select name="tournament" id="tournamentFormat" required>
+                    <option value="" disabled selected hidden>Please Choose...</option>
+                    <option value="64">64</option>
+                    <option value="32">32</option>
+                    <option value="16">16</option>
+                </select>
+                <input type="submit">
+            </form>
+        </div>
+        
         
         <div class="parent-game">
             <div class="status-bar"><p>Title Progress..........</p></div>

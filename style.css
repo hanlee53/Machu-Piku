@@ -3,17 +3,20 @@
 }
 
 /*Title of the page "Match Piku"*/
-.top {
+.title {
     text-align: center;
     padding-top: 3vw;
     padding-bottom: 3vw;
     margin: 0;
+    font-size: 3vw;
 }
 
-.top h1 {
-    margin: 0;
+.title a {
+    text-decoration: none;
+    color: black;
 }
 
+/*index.html*/
 .parent {
     display: flex;
     justify-content: center; /*horizontally center the child div(here, the worldcup-container div)*/
@@ -86,11 +89,24 @@
 }
 
 /*game.html*/
+.form-container {
+    display: flex;
+    background-color: antiquewhite;
+    justify-content: center;
+    font-size: 3vw;
+}
+
 .parent-game {
     display: flex;
     justify-content: center; /*horizontally center the child div(here, the worldcup-container div)*/
 }
+
 .status-bar {
+    display: none;
+}
+
+.status-bar.active {
+    display: block;
     width: 80vw;
     height: 4vh;
 }
@@ -104,13 +120,18 @@
     display: flex;
 }
 
+.left, .right {
+    display: none;
+}
+
 .left img, .right img {
     opacity: 0.8;
     height: 70vh;
     width: 40vw;
 }
 
-.left , .right {
+.left.active , .right.active {
+    display: block;
     position: relative;
     text-align: center;
 }
