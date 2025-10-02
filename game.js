@@ -81,7 +81,7 @@ function tournament(players, number, tournamentFormat, winners) {
 
         // if the round is over
         if (number + 1 >= tournamentFormat / 2) {
-            if (winners.length === 1) { // display the winner if there is only one winner
+            if (winners.length == 1) { // display the winner if there is only one winner
                 alert(`The winner is ${winners[0].name}!`); 
                 returnHome();
             } else {
