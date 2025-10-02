@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    font-family: monospace;
+    background-color: blanchedalmond;
 }
 
 /*Title of the page "Match Piku"*/
@@ -91,10 +93,16 @@
 /*game.html*/
 .form-container {
     display: flex;
-    background-color: antiquewhite;
     justify-content: center;
     font-size: 3vw;
 }
+
+.form-container select, .form-container input {
+    font-size: 2vw;
+    height: 3vw;
+    border-radius: 30px;
+}
+
 
 .parent-game {
     display: flex;
@@ -118,6 +126,7 @@
 
 .container {
     display: flex;
+    border-radius: 50px;
 }
 
 .left, .right {
@@ -128,6 +137,16 @@
     opacity: 0.8;
     height: 70vh;
     width: 40vw;
+}
+
+.left img {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.right img {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .left.active , .right.active {
@@ -142,5 +161,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2vw;
+    background-color: unset;
+    color: white;
 }
 

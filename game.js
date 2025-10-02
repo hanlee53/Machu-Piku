@@ -81,7 +81,7 @@ function tournament(players, number, tournamentFormat, winners) {
 
         // if the round is over
         if (number + 1 >= tournamentFormat / 2) {
-            if (winners.length == 1) { // display the winner if there is only one winner
+            if (winners.length === 1) { // display the winner if there is only one winner
                 alert(`The winner is ${winners[0].name}!`); 
                 returnHome();
             } else {
@@ -137,86 +137,3 @@ async function main() {
 }
 
 main();
-
-
-/*
-// Testing server from here
-// apiClient.js
-const API = "http://localhost:3000";
-
-export async function createTournament(roundSize=16, contenderIds=null) {
-  const body = contenderIds ? { roundSize, contenderIds } : { roundSize };
-  const res = await fetch(`${API}/tournaments`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) throw new Error(await res.text());
-  return res.json(); // { id, round }
-}
-
-export async function getMatches(tid, round) {
-  const res = await fetch(`${API}/tournaments/${tid}/matches?round=${round}`);
-  if (!res.ok) throw new Error(await res.text());
-  return res.json();
-}
-
-export async function setWinner(matchId, winnerId) {
-  const res = await fetch(`${API}/matches/${matchId}/winner`, {
-    method: "PATCH",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ winnerId })
-  });
-  if (!res.ok) throw new Error(await res.text());
-}
-
-export async function advance(tid) {
-  const res = await fetch(`${API}/tournaments/${tid}/advance`, { method: "POST" });
-  if (!res.ok) throw new Error(await res.text());
-  return res.json(); // { round, created }
-}
-
-export async function finish(tid) {
-  const res = await fetch(`${API}/tournaments/${tid}/finish`, { method: "POST" });
-  if (!res.ok) throw new Error(await res.text());
-}
-
-
-// Another!
-
-import { createTournament, getMatches, setWinner, advance, finish } from './apiClient.js';
-
-let tid = null;
-let currentRound = 16;
-let matches = [];
-
-async function start() {
-  const t = await createTournament(16);
-  tid = t.id;
-  currentRound = t.round;
-  matches = await getMatches(tid, currentRound);
-  renderRound(matches);
-}
-
-async function onPick(matchId, winnerId) {
-  await setWinner(matchId, winnerId);
-  // update local state
-  const m = matches.find(m => m.id === matchId);
-  if (m) m.winner_id = winnerId;
-
-  if (matches.every(m => m.winner_id)) {
-    if (currentRound === 2) {
-      await finish(tid);
-      showChampion(matches.find(m => m.round === 2).winner_id);
-    } else {
-      const nxt = await advance(tid);
-      currentRound = nxt.round;
-      matches = await getMatches(tid, currentRound);
-      renderRound(matches);
-    }
-  } else {
-    renderRound(matches); // optionally advance UI to next pair
-  }
-}
-  */
- 
