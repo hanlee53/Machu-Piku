@@ -45,6 +45,7 @@
 .worldcup h1 {
     margin: 0;
 }
+
 /*display originally set to none, if .show class is added according to pagination.js, display the worldcup*/
 .worldcup {
     display: none;
@@ -101,6 +102,16 @@
     font-size: 2vw;
     height: 3vw;
     border-radius: 30px;
+}
+
+.or {
+    display: none;
+}
+
+.or.active {
+    display:block;
+    margin-top: 20vh;
+    height: 15vw;
 }
 
 

@@ -122,7 +122,8 @@ async function main() {
         // Run the tournament
         const left = document.querySelector(".left"),
             right = document.querySelector(".right"),
-            nav = document.querySelector(".status-bar");
+            nav = document.querySelector(".status-bar"),
+            or = document.querySelector(".or");
         
             const players = await shuffleTournamentList("source/csv/ManUtd_Players.csv", tournamentFormat);
         tournament(players, 0, tournamentFormat, winners); 
@@ -130,6 +131,7 @@ async function main() {
         left.classList.toggle("active");
         right.classList.toggle("active");
         nav.classList.toggle("active");
+        or.classList.toggle("active");
 
         // Hide the select menu after the userInput
         document.getElementById("tournamentFormat-form").innerHTML = `<form id="tournamentFormat-form" style="display: hidden;">`;
