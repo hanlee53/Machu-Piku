@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Matchu Piku</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="title"><a href="index.html">Machu Piku</a></div>
+        
+        <div class="form-container">
+            <form id="tournamentFormat-form">
+                <label for="format">Tournament Format</label>
+                <select name="tournament" id="tournamentFormat" required>
+                    <option value="" disabled selected hidden>Please Choose...</option>
+                    <option value="64">64</option>
+                    <option value="32">32</option>
+                    <option value="16">16</option>
+                </select>
+                <input type="submit">
+            </form>
+        </div>
+        
+        
+        <div class="parent-game">
+            <div class="status-bar"><p>Title Progress..........</p></div>
+        </div>
+        
+        <div class="parent-game">
+            <div class="container">
+                <div class="left">
+                    <img id="left_img" src=#>
+                </div>
+
+                <img class="or" src="source/image/or-gate.png">
+        
+                <div class="right">
+                    <img id="right_img" src=#>
+                </div>
+            </div>
+        </div>
+        
+        <script src="game.js" defer></script>    
+    </body>
+</html>

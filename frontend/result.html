@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Matchu Piku</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <style>
+        .winner-card { max-width: 520px; margin: 32px auto; text-align: center; }
+        .winner-card img { width: 100%; max-width: 480px; height: auto; border-radius: 12px; }
+        .winner-card h2 { margin: 16px 0 8px; }
+        .muted { color: #888; }
+    </style>
+    </head>
+    <body>
+        <div class="top">
+            <h1>Matchu Piku Result</h1>
+        </div>
+        <div id="winner" class="winner-card">
+        </div>
+        <script defer>
+      (function () {
+        const slot = document.getElementById('winner');
+        let data = null;
+
+        try {
+          data = JSON.parse(localStorage.getItem('champion') || 'null');
+        } catch (_) {}
+
+        if (!data || (!data.name && !data.imgSrc)) {
+          slot.innerHTML = `
+            <p class="muted">No winner found. Start a tournament first.</p>
+            <p><a href="index.html">Back to Home</a></p>`;
+          return;
+        }
+
+        const safeName = (data.name || 'Champion')
+          .replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+        slot.innerHTML = `
+          <img src="${data.imgSrc}" alt="${safeName}">
+          <h2>${safeName}</h2>
+          <p><a href="index.html">Play again</a></p>
+        `;
+      })();
+    </script>
+    </body>
+</html>
