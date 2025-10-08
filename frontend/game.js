@@ -67,11 +67,11 @@ function tournament(players, number, tournamentFormat, winners) {
     const left = document.querySelector(".left"),
           right = document.querySelector(".right"),
           title = document.querySelector(".status-bar");
+          
 
     leftPlayer = players[number]; // Starts from the first player of the list
     rightPlayer = players[tournamentFormat - 1 - number]; // Starts from the last player of the list
-
-
+    
     title.innerHTML = `<p>Round ${tournamentFormat} &nbsp ${number}/${tournamentFormat / 2} </p>`;
     renderLeftAndRight(leftPlayer, rightPlayer);
 
@@ -80,10 +80,20 @@ function tournament(players, number, tournamentFormat, winners) {
     left.onclick = () => {
         winners.push(leftPlayer); // Selected player in the winners list.
 
+        
+
         // if the round is over
         if (number + 1 >= tournamentFormat / 2) {
             if (winners.length === 1) { // display the winner if there is only one winner
                 alert(`The winner is ${winners[0].name}!`); 
+
+                const champion = winners[0];
+                localStorage.setItem('champion', JSON.stringify({        
+                id: champion.id || null,
+                name: champion.name || '',
+                imgSrc: champion.imgSrc || ''
+            }));
+
                 returnHome();
             } else {
                 tournament(winners, 0, winners.length, []); // new round
@@ -100,6 +110,14 @@ function tournament(players, number, tournamentFormat, winners) {
         if (number + 1 >= tournamentFormat / 2) {
             if (winners.length === 1) { // display the winner if there is only one winner
                 alert(`The winner is ${winners[0].name}!`);
+
+                const champion = winners[0];
+                localStorage.setItem('champion', JSON.stringify({        
+                id: champion.id || null,
+                name: champion.name || '',
+                imgSrc: champion.imgSrc || ''
+            }));
+                
                 returnHome()
             } else {
                 tournament(winners, 0, winners.length, []); // new round
