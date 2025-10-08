@@ -32,7 +32,7 @@ async function readCSV(sourceCsvFile, tournamentFormat) {
 
 // select contenders for the tournament
 async function shuffleTournamentList(srcToCsv, tournamentFormat) {
-    const contender_list = await readCSV(srcToCsv, tournamentFormat); 
+    const contender_list = await readCSV(srcToCsv, tournamentFormat);
     let players = [];
 
     //Always put the top 5 players
@@ -112,7 +112,7 @@ function tournament(players, number, tournamentFormat, winners) {
                 alert(`The winner is ${winners[0].name}!`);
 
                 const champion = winners[0];
-                localStorage.setItem('champion', JSON.stringify({        
+                localStorage.setItem('champion', JSON.stringify({
                 id: champion.id || null,
                 name: champion.name || '',
                 imgSrc: champion.imgSrc || ''

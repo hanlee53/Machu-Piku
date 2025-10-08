@@ -41,7 +41,7 @@ app.get('/pair', async (_req, res) => {
   if (error) return res.status(500).json({ error: error.message });
   if (!data || data.length < 2) return res.status(400).json({ error: 'Need at least 2 images' });
 
-  // Simple random pick. (You can make this smarter later.)
+  // Simple random pick. 
   const i = Math.floor(Math.random() * data.length);
   let j = Math.floor(Math.random() * data.length);
   if (j === i) j = (j + 1) % data.length;
@@ -91,7 +91,6 @@ app.post('/vote', async (req, res) => {
   }
 });
 
-// (Optional) GET /me/votes?userId=... → see your history
 app.get('/me/votes', async (req, res) => {
   const userId = req.query.userId;
   if (!userId) return res.status(400).json({ error: 'Missing userId' });
