@@ -1,0 +1,20 @@
+{
+  "name": "machu-piku",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanlee53/Machu-Piku.git"
+  },
+  "homepage": "https://github.com/hanlee53/Machu-Piku#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.19.2"
+  }
+}
