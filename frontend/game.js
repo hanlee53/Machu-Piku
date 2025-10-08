@@ -35,11 +35,6 @@ async function shuffleTournamentList(srcToCsv, tournamentFormat) {
     const contender_list = await readCSV(srcToCsv, tournamentFormat);
     let players = [];
 
-    //Always put the top 5 players
-    for (let i = 0; i < 5; ++i) {
-        players.push(contender_list[i]);
-    }
-
     // randomly select players upto tournament format (16,32,64)
     while (players.length < tournamentFormat) {
         let randomNumber = Math.floor(Math.random() * (contender_list.length - 1));
@@ -80,24 +75,31 @@ function tournament(players, number, tournamentFormat, winners) {
     left.onclick = () => {
         winners.push(leftPlayer); // Selected player in the winners list.
 
-        
-
         // if the round is over
         if (number + 1 >= tournamentFormat / 2) {
             if (winners.length === 1) { // display the winner if there is only one winner
-                alert(`The winner is ${winners[0].name}!`); 
-
                 const champion = winners[0];
+                alert(`The winner is ${champion.name}!`); 
+
                 localStorage.setItem('champion', JSON.stringify({        
                 id: champion.id || null,
                 name: champion.name || '',
                 imgSrc: champion.imgSrc || ''
             }));
-
                 returnHome();
             } else {
-                tournament(winners, 0, winners.length, []); // new round
-            }
+                /*This line is added to shuffle the winners list before starting the new round*/ 
+                let newRoundNumber = Math.floor(Math.random() * winners.length)
+                let newWinners = [];
+                for (let i = 0; i < winners.length; ++i) {
+                    let newIdx = Math.abs(i - newRoundNumber);
+                    while (newWinners[newIdx] != null) {
+                        newIdx += 1;
+                    }    
+                    newWinners[newIdx] = winners[i];
+                }
+                tournament(newWinners, 0, newWinners.length, []); // new round
+                }
         } else {
         tournament(players, number + 1, tournamentFormat, winners); // continue until the next round
         }
@@ -109,17 +111,26 @@ function tournament(players, number, tournamentFormat, winners) {
         
         if (number + 1 >= tournamentFormat / 2) {
             if (winners.length === 1) { // display the winner if there is only one winner
-                alert(`The winner is ${winners[0].name}!`);
-
                 const champion = winners[0];
+                alert(`The winner is ${champion.name}!`);
+                
                 localStorage.setItem('champion', JSON.stringify({
                 id: champion.id || null,
                 name: champion.name || '',
                 imgSrc: champion.imgSrc || ''
-            }));
-                
+            }));               
                 returnHome()
             } else {
+                /*This line is added to shuffle the winners list before starting the new round*/ 
+                let newRoundNumber = Math.floor(Math.random() * winners.length)
+                let newWinners = [];
+                for (let i = 0; i < winners.length; ++i) {
+                    let newIdx = Math.abs(i - newRoundNumber);
+                    while (newWinners[newIdx] != null) {
+                        newIdx += 1;
+                    }    
+                    newWinners[newIdx] = winners[i];
+                }
                 tournament(winners, 0, winners.length, []); // new round
             }
         } else {

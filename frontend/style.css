@@ -42,9 +42,6 @@
     gap: 0.5vw;
 }
 
-.worldcup h1 {
-    margin: 0;
-}
 
 /*display originally set to none, if .show class is added according to pagination.js, display the worldcup*/
 .worldcup {
@@ -55,12 +52,30 @@
     display: grid;
 }
 
+.worldcup h1 {
+    margin: 0;
+}
+
+.worldcup a {
+    text-decoration: none;
+    color: black;
+}
+
+.worldcup :hover {
+    scale: 1.02;
+    transition-duration: 0.5s;
+}
+
 .thumbnail {
-    background-color: black;
     height: 25vw;
     width: 25vw;
 }
 
+.thumbnail img{
+    height: inherit;
+    width: inherit;
+    border-radius: 2vw;
+}
 
 .pagination ul {
     margin: 0;
