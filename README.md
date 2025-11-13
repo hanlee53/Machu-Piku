@@ -33,8 +33,8 @@ SUPABASE_SERVICE_ROLE_KEY=ADD_YOUR_KEY
 PORT=8787
 ```
 
-3. Replace ADD_YOUR_URL with your Supabase project URL.
-4. Replace ADD_YOUR_KEY with your Supabase service role key.
+3. Replace `ADD_YOUR_URL` with your Supabase project URL.
+4. Replace `ADD_YOUR_KEY` with your Supabase service role key.
 
 ## 4. Start the Server
 Run the start script defined in `package.json`.
